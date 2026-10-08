@@ -4,6 +4,7 @@ import contextlib
 import inspect
 import io
 import unittest
+from importlib.resources import files
 
 from phenosurv import ThreshSurvGDD
 
@@ -56,6 +57,10 @@ class TestThreshSurvGDDPrintCode(unittest.TestCase):
         for declaration in ("real T_base;", "real Psi0_bar;", "real<lower=0> sigma;"):
             with self.subTest(declaration=declaration):
                 self.assertIn(declaration, code)
+
+    def test_printed_code_matches_packaged_stan_file(self):
+        packaged = (files("phenosurv") / "stan" / "thresh-surv-gdd.stan").read_text()
+        self.assertEqual(self._printed_code().rstrip("\n"), packaged.rstrip("\n"))
 
 
 if __name__ == "__main__":

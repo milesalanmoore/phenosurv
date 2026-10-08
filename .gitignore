@@ -64,8 +64,11 @@ coverage.xml
 .Rproj.user/
 
 # --- CmdStan build and sampling output -------------------------------------------
-# Compiled model executables have no extension on macOS/Linux, so add a rule for
-# the directory the packaged .stan files end up in once it exists.
 *.hpp
 *.o
 *.exe
+# Compiled model executables have no extension on macOS/Linux, so ignore
+# everything in the packaged model folder except the models and their version.
+src/phenosurv/stan/*
+!src/phenosurv/stan/*.stan
+!src/phenosurv/stan/PHENOSTAN_VERSION
